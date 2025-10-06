@@ -11,7 +11,9 @@ services:
       - php
   php:
     container_name: php
-    image: php:8.4-fpm-alpine
+    build:
+      context: .
+      target: php
     volumes:
       - ./public/:/var/www/public/
       - image:/var/www/upload/image/
@@ -19,13 +21,13 @@ services:
     container_name: mysql
     image: mysql:8.4
     environment:
-      MYSQL_DATABASE: ensyu_db
+      MYSQL_DATABASE: example_db
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       TZ: Asia/Tokyo
     volumes:
       - mysql:/var/lib/mysql
     command: >
-      mysqld  
+      mysqld
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
       --max_allowed_packet=4MB
